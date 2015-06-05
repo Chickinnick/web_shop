@@ -14,6 +14,10 @@ import org.oa.tp.data.*;
 
 class AlbumDao implements AbstractDao<Album> {
 
+	private static final String TABLE_NAME = "album";
+	private static final String COLUMN_ID = "id";
+	private static final String COLUMN_NAME = "name";
+	private static final String COLUMN_YEAR = "year";
 	private Statement statement;
 	private Connection connection;
 
@@ -21,9 +25,9 @@ class AlbumDao implements AbstractDao<Album> {
 		this.connection = connection;
 		this.statement = statement;
 		try {
-			statement.execute("CREATE TABLE IF NOT EXISTS album ("
-					+ "id INTEGER PRIMARY KEY AUTOINCREMENT ,"
-					+ "name TEXT NOT NULL," + "year INT NOT NULL" + ");");
+			statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+					+ COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+					+ COLUMN_NAME + " TEXT NOT NULL," + COLUMN_YEAR + " INT NOT NULL" + ");");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,11 +40,11 @@ class AlbumDao implements AbstractDao<Album> {
 
 		try {
 			ResultSet resultSet = statement
-					.executeQuery("SELECT * FROM album;");
+					.executeQuery("SELECT * FROM " + TABLE_NAME + ";");
 			while (resultSet.next()) {
-				int id = resultSet.getInt("id");
-				String name = resultSet.getString("name");
-				int year = resultSet.getInt("year");
+				int id = resultSet.getInt(COLUMN_ID);
+				String name = resultSet.getString(COLUMN_NAME);
+				int year = resultSet.getInt(COLUMN_YEAR);
 				albums.add(new Album(id, name, year));
 			}
 		} catch (SQLException e) {
@@ -55,12 +59,12 @@ class AlbumDao implements AbstractDao<Album> {
 		Album album = null;
 		try {
 			ResultSet resultSet = statement
-					.executeQuery("SELECT * FROM album WHERE id=" + objectId
+					.executeQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=" + objectId
 							+ ";");
 			while (resultSet.next()) {
-				int id = resultSet.getInt("id");
-				String name = resultSet.getString("name");
-				int year = resultSet.getInt("year");
+				int id = resultSet.getInt(COLUMN_ID);
+				String name = resultSet.getString(COLUMN_NAME);
+				int year = resultSet.getInt(COLUMN_YEAR);
 				album = new Album(id, name, year);
 				break;
 			}
@@ -74,7 +78,7 @@ class AlbumDao implements AbstractDao<Album> {
 	public boolean delete(long id) {
 
 		try {
-			statement.executeUpdate("DELETE FROM album WHERE id=" + id + ";");
+			statement.executeUpdate("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "=" + id + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -86,9 +90,9 @@ class AlbumDao implements AbstractDao<Album> {
 	@Override
 	public boolean update(Album changed) {
 		try {
-			statement.executeUpdate("UPDATE album SET name='"
-					+ changed.getName() + "',year='" + changed.getYear()
-					+ "' WHERE id=" + changed.getId() + ";");
+			statement.executeUpdate("UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME + "='"
+					+ changed.getName() + "'," + COLUMN_YEAR + "='" + changed.getYear()
+					+ "' WHERE " + COLUMN_ID + "=" + changed.getId() + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -99,7 +103,7 @@ class AlbumDao implements AbstractDao<Album> {
 	@Override
 	public boolean add(Album item) {
 		try {
-			statement.executeUpdate("INSERT INTO album " + " (name, year)"
+			statement.executeUpdate("INSERT INTO " + TABLE_NAME + " " + " (" + COLUMN_NAME + ", " + COLUMN_YEAR + ")"
 					+ " VALUES ('" + item.getName() + "','" + item.getYear()
 					+ "')");
 
@@ -113,7 +117,7 @@ class AlbumDao implements AbstractDao<Album> {
 	@Override
 	public boolean addAll(Collection<Album> collection) {
 		
-		String sqlQuery = "INSERT INTO album " + " (name, year)"
+		String sqlQuery = "INSERT INTO " + TABLE_NAME + " " + " (" + COLUMN_NAME + ", " + COLUMN_YEAR + ")"
 				+ " VALUES ( ? , ? )";
 		
 		try {

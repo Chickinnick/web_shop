@@ -22,10 +22,10 @@ import org.oa.tp.data.Album;
  */
 public class AlbumsServiceServlet extends HttpServlet {
 
-    private static final String PAREMETR_METHOD = "method";
-    private static final String PAREMETR_ID = "id";
-    private static final String PAREMETR_NAME = "name";
-    private static final String PAREMETR_YEAR = "year";
+    private static final String PARAMETER_METHOD = "method";
+    private static final String PARAMETER_ID = "id";
+    private static final String PARAMETER_NAME = "name";
+    private static final String PARAMETER_YEAR = "year";
 
     private static final String GET_ALL_METHOD = "get";
     private static final String CREATE_METHOD = "create";
@@ -35,7 +35,7 @@ public class AlbumsServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        final String queryMethod = request.getParameter(PAREMETR_METHOD);
+        final String queryMethod = request.getParameter(PARAMETER_METHOD);
 
         System.out.println("method " + queryMethod);
         response.setContentType("application/json;charset=UTF-8");
@@ -47,9 +47,10 @@ public class AlbumsServiceServlet extends HttpServlet {
                 Gson gson = new Gson();
                 gson.toJson(albums, out);
             }
+            response.setStatus(HttpServletResponse.SC_OK);
         } else if (CREATE_METHOD.equalsIgnoreCase(queryMethod)) {
-            String nameString = request.getParameter(PAREMETR_NAME);
-            String yearString = request.getParameter(PAREMETR_YEAR);
+            String nameString = request.getParameter(PARAMETER_NAME);
+            String yearString = request.getParameter(PARAMETER_YEAR);
             int year = Integer.parseInt(yearString);
             Album album = new Album(nameString, year);
             boolean created = facade.getAlbumDao().add(album);
@@ -63,9 +64,9 @@ public class AlbumsServiceServlet extends HttpServlet {
                 }
             }
         } else if (UPDATE_METHOD.equalsIgnoreCase(queryMethod)) {
-            String idString = request.getParameter(PAREMETR_ID);
-            String nameString = request.getParameter(PAREMETR_NAME);
-            String yearString = request.getParameter(PAREMETR_YEAR);
+            String idString = request.getParameter(PARAMETER_ID);
+            String nameString = request.getParameter(PARAMETER_NAME);
+            String yearString = request.getParameter(PARAMETER_YEAR);
             int year = Integer.parseInt(yearString);
             long id = Long.parseLong(idString);
             Album album = new Album(id, nameString, year);
@@ -80,7 +81,7 @@ public class AlbumsServiceServlet extends HttpServlet {
                 }
             }
         } else if (DELETE_METHOD.equalsIgnoreCase(queryMethod)) {
-            String idString = request.getParameter(PAREMETR_ID);
+            String idString = request.getParameter(PARAMETER_ID);
             long id = Long.parseLong(idString);
             boolean deleted = facade.getAlbumDao().delete(id);
             try (PrintWriter out = response.getWriter()) {
