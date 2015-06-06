@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>AlbumsServiceServlet</servlet-name>
-        <servlet-class>org.oa.tp.servlets.AlbumsServiceServlet</servlet-class>
+        <servlet-class>org.oa.tp.servlets.ServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AlbumsViewServlet</servlet-name>
@@ -14,7 +12,6 @@
         <servlet-name>AlbumsServiceServlet</servlet-name>
         <url-pattern>/albums</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>AlbumsViewServlet</servlet-name>
         <url-pattern>/albums-view</url-pattern>

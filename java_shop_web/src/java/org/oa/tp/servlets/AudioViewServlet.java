@@ -9,40 +9,55 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.oa.tp.dao.DaoFacade;
 import org.oa.tp.data.Album;
+import org.oa.tp.data.Audio;
 
-public class AlbumsViewServlet extends HttpServlet {
+@WebServlet(name = "AudioViewServlet", urlPatterns = {"/audio-view"})
+
+public class AudioViewServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         DaoFacade facade = new DaoFacade(getServletContext());
-        List<Album> albums = facade.getAlbumDao().loadAll();
+        
+        Audio a = new Audio(1, "Name", 2, 344, 10000, 3);
+        facade.getAudioDao().add(a);
+        List<Audio> audios = facade.getAudioDao().loadAll();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Albums</title>");
+            out.println("<title>Audios</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Albums</h1>");
+            out.println("<h1>Audios</h1>");
             out.println("<table border=\"1\" style=\"width:100%\">");
             out.println("<tr>");
             out.println("<th>ID</th>");
             out.println("<th>NAME</th>");
-            out.println("<th>YEAR</th>");
+            out.println("<th>DURATION</th>");
+            out.println("<th>PRICE</th>");
+            out.println("<th>AUTHOR</th>");
+            out.println("<th>GENRE</th>");
             out.println("<th>DELETE</th>");
             out.println("</tr>");
-            for (Album album : albums) {
+            for (Audio audio : audios) {
                 out.println("<tr>");
-                out.println("<td>" + album.getId() + "</td>");
-                out.println("<td>" + album.getName() + "</td>");
-                out.println("<td>" + album.getYear() + "</td>");
-                out.println("<td><a href=\"albums?method=delete&id=" + album.getId() + "\">Delete</a></td>");
+                out.println("<td>" + audio.getId() + "</td>");
+                out.println("<td>" + audio.getName() + "</td>");
+                out.println("<td>" + audio.getDuration() + "</td>");
+                out.println("<td>" + audio.getPrice() + "</td>");
+                out.println("<td>" + audio.getAuthor() + "</td>");
+                out.println("<td>" + audio.getGenre()+ "</td>");
+                out.println("<td><a href=\"albums?method=delete&id=" + audio.getId() + "\">Delete</a></td>");
                 out.println("</tr>");
             }
             out.println("</table>");
@@ -51,41 +66,23 @@ public class AlbumsViewServlet extends HttpServlet {
             out.println("</html>");
         }
     }
+        
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    
     @Override
     public String getServletInfo() {
         return "Short description";

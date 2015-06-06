@@ -1,55 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.oa.tp.servlets;
 
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.oa.tp.dao.DaoFacade;
 import org.oa.tp.data.Album;
 
-/**
- *
- * @author nikolay
- */
-public class AlbumsServiceServlet extends HttpServlet {
+@WebServlet(name = "AlbumsService", urlPatterns = {"/albums_service"})
 
-    private static final String PARAMETER_METHOD = "method";
+public class AlbumsServiceServlet extends ServiceServlet {
+
     private static final String PARAMETER_ID = "id";
     private static final String PARAMETER_NAME = "name";
     private static final String PARAMETER_YEAR = "year";
 
-    private static final String GET_ALL_METHOD = "get";
-    private static final String CREATE_METHOD = "create";
-    private static final String DELETE_METHOD = "delete";
-    private static final String UPDATE_METHOD = "update";
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        final String queryMethod = request.getParameter(PARAMETER_METHOD);
-
-        System.out.println("method " + queryMethod);
-        response.setContentType("application/json;charset=UTF-8");
-
-        DaoFacade facade = new DaoFacade(getServletContext());
-        if (GET_ALL_METHOD.equalsIgnoreCase(queryMethod)) {
-            List<Album> albums = facade.getAlbumDao().loadAll();
-            try (PrintWriter out = response.getWriter()) {
-                Gson gson = new Gson();
-                gson.toJson(albums, out);
-            }
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else if (CREATE_METHOD.equalsIgnoreCase(queryMethod)) {
-            String nameString = request.getParameter(PARAMETER_NAME);
+    
+    void create(HttpServletRequest request,HttpServletResponse response , DaoFacade facade ) {
+        String nameString = request.getParameter(PARAMETER_NAME);
             String yearString = request.getParameter(PARAMETER_YEAR);
             int year = Integer.parseInt(yearString);
             Album album = new Album(nameString, year);
@@ -62,9 +37,28 @@ public class AlbumsServiceServlet extends HttpServlet {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     out.print("{\"error\":\"Failed create album\"}");
                 }
-            }
-        } else if (UPDATE_METHOD.equalsIgnoreCase(queryMethod)) {
-            String idString = request.getParameter(PARAMETER_ID);
+            } catch (IOException ex) {
+            Logger.getLogger(AlbumsServiceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }    }
+
+    void delete(HttpServletRequest request,HttpServletResponse response , DaoFacade facade) {
+ String idString = request.getParameter(PARAMETER_ID);
+            long id = Long.parseLong(idString);
+            boolean deleted = facade.getAlbumDao().delete(id);
+            try (PrintWriter out = response.getWriter()) {
+                if (deleted) {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    out.print("{\"response\":\"Album deleted\"}");
+                } else {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    out.print("{\"error\":\"Failed delete album\"}");
+                }
+            } catch (IOException ex) {
+            Logger.getLogger(AlbumsServiceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }    }
+
+    void update(HttpServletRequest request,HttpServletResponse response , DaoFacade facade) {
+  String idString = request.getParameter(PARAMETER_ID);
             String nameString = request.getParameter(PARAMETER_NAME);
             String yearString = request.getParameter(PARAMETER_YEAR);
             int year = Integer.parseInt(yearString);
@@ -79,38 +73,34 @@ public class AlbumsServiceServlet extends HttpServlet {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     out.print("{\"error\":\"Failed update album\"}");
                 }
-            }
-        } else if (DELETE_METHOD.equalsIgnoreCase(queryMethod)) {
-            String idString = request.getParameter(PARAMETER_ID);
-            long id = Long.parseLong(idString);
-            boolean deleted = facade.getAlbumDao().delete(id);
+            } catch (IOException ex) {
+            Logger.getLogger(AlbumsServiceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }    }
+
+    void getAll(HttpServletRequest request,HttpServletResponse response , DaoFacade facade) {
+  List<Album> albums = facade.getAlbumDao().loadAll();
             try (PrintWriter out = response.getWriter()) {
-                if (deleted) {
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    out.print("{\"response\":\"Album deleted\"}");
-                } else {
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    out.print("{\"error\":\"Failed delete album\"}");
-                }
-            }
-        } else {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            try (PrintWriter out = response.getWriter()) {
-                out.print("{\"error\":\"Not found method\"}");
-            }
+                Gson gson = new Gson();
+                gson.toJson(albums, out);
+            } catch (IOException ex) {
+            Logger.getLogger(AlbumsServiceServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        final String queryString = request.getQueryString();
-        System.out.println("query string " + queryString);
-    }
+    
+    
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
-
+    
+   
 }

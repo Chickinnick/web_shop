@@ -17,7 +17,7 @@ public class DaoFacade {
 
     private Connection connection;
     private AlbumDao albumDao;
-
+    private AudioDao audioDao;
     private GenreDao genreDao = new GenreDao();
     private Statement statement;
 
@@ -41,6 +41,7 @@ public class DaoFacade {
             e.printStackTrace();
         }
         albumDao = new AlbumDao(statement, connection);
+        audioDao = new AudioDao(statement, connection);
     }
 
     public AbstractDao<Album> getAlbumDao() {
@@ -51,6 +52,12 @@ public class DaoFacade {
         return genreDao;
     }
 
+    public AudioDao getAudioDao() {
+        return audioDao;
+    }
+
+     
+    
     public void closeSqlConnection() {
         if (statement != null) {
             try {
