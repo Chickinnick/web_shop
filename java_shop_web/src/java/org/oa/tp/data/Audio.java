@@ -23,7 +23,18 @@ public class Audio {
 	
 	private Author author;
 	private Genre genre;
+
+    public Audio(String name, int duration, int price, long genreId, long authorId) {
+        this.id = 0;
+        this.name = name;
+        this.duration = duration;
+        this.price = price;
+        this.genreId = genreId;
+        this.authorId = authorId;
+    }
 	
+        
+        
 	public Audio(long id, String name, long authorId, int duration, int price,
 			long genreId) {
 		this.id = id;
@@ -33,6 +44,8 @@ public class Audio {
 		this.price = price;
 		this.genreId = genreId;
 	}
+
+   
 
 	public int getPrice() {
 		return price;

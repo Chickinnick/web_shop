@@ -2,11 +2,23 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>AlbumsServiceServlet</servlet-name>
-        <servlet-class>org.oa.tp.servlets.ServiceServlet</servlet-class>
+        <servlet-class>org.oa.tp.servlets.AlbumsServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AlbumsViewServlet</servlet-name>
         <servlet-class>org.oa.tp.servlets.AlbumsViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AudioServiceServlet</servlet-name>
+        <servlet-class>org.oa.tp.servlets.AudioServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthorsViewServlet</servlet-name>
+        <servlet-class>org.oa.tp.servlets.AuthorsViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthorsServiceServlet</servlet-name>
+        <servlet-class>org.oa.tp.servlets.AuthorsServiceServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AlbumsServiceServlet</servlet-name>
@@ -16,9 +28,20 @@
         <servlet-name>AlbumsViewServlet</servlet-name>
         <url-pattern>/albums-view</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthorsViewServlet</servlet-name>
+        <url-pattern>/authors-view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuthorsServiceServlet</servlet-name>
+        <url-pattern>/authors</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
+       
     </session-config>
+     
+    
 </web-app>

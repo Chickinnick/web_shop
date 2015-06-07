@@ -18,8 +18,18 @@ public class Author {
 	
 	@SerializedName("gender")
 	private String gender;
+
+    public Author(String firstName, String lastName, int age, String gender) {
+        
+        this.id = 0;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.gender = gender;
+    }
 	
 	
+        
 	
 	public Author(long id, String firstName, String lastName, int age,
 			String gender) {

@@ -31,11 +31,10 @@ public class AudioDao implements AbstractDao<Audio> {
         try {
             statement.execute("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
-                    + COLUMN_NAME + " TEXT NOT NULL," + COLUMN_DURATION + " INT NOT NULL"
-                    + COLUMN_PRICE + " INT NOT NULL" + COLUMN_AUTHOR_ID + " INT NOT NULL"
+                    + COLUMN_NAME + " TEXT NOT NULL," + COLUMN_DURATION + " INT NOT NULL,"
+                    + COLUMN_PRICE + " INT NOT NULL," + COLUMN_AUTHOR_ID + " INT NOT NULL,"
                     + COLUMN_GENRE_ID + " INT NOT NULL" + ");");
         } catch (SQLException e) {
-
             e.printStackTrace();
         }
     }
@@ -109,11 +108,11 @@ public class AudioDao implements AbstractDao<Audio> {
     public boolean add(Audio item) {
         
         try {
-            statement.executeUpdate("INSERT INTO " + TABLE_NAME + " " + " (" + COLUMN_NAME + ", " + COLUMN_DURATION
-                    + COLUMN_AUTHOR_ID + ", " + COLUMN_GENRE_ID + ", " + COLUMN_PRICE + ", "  + ")"
-                    + " VALUES ('" + item.getName() + "','" + item.getDuration() + "','" + item.getAuthor() + "','" + item.getGenre() +
+            statement.executeUpdate("INSERT INTO " + TABLE_NAME + " " + " (" + COLUMN_NAME + ", " + COLUMN_DURATION + ", "
+                    + COLUMN_AUTHOR_ID + ", " + COLUMN_GENRE_ID + ", " + COLUMN_PRICE + ")"
+                    + " VALUES (' " + item.getName() + "','" + item.getDuration() + "','" + item.getAuthor() + "','" + item.getGenre() +
                     "','" + item.getPrice()
-                    + "')");
+                    + "');");
 
         } catch (SQLException e) {
             e.printStackTrace();

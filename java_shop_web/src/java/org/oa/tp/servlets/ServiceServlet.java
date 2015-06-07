@@ -1,25 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.oa.tp.servlets;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.oa.tp.dao.DaoFacade;
-import org.oa.tp.data.Album;
 
 public abstract class ServiceServlet extends HttpServlet {
 
     private static final String PARAMETER_METHOD = "method";
-   
     private static final String GET_ALL_METHOD = "get";
     private static final String CREATE_METHOD = "create";
     private static final String DELETE_METHOD = "delete";
@@ -56,6 +47,7 @@ public abstract class ServiceServlet extends HttpServlet {
         }
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

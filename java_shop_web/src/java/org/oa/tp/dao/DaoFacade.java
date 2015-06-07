@@ -18,6 +18,7 @@ public class DaoFacade {
     private Connection connection;
     private AlbumDao albumDao;
     private AudioDao audioDao;
+    private AuthorDao authorDao;
     private GenreDao genreDao = new GenreDao();
     private Statement statement;
 
@@ -42,6 +43,7 @@ public class DaoFacade {
         }
         albumDao = new AlbumDao(statement, connection);
         audioDao = new AudioDao(statement, connection);
+        authorDao = new AuthorDao(statement, connection);
     }
 
     public AbstractDao<Album> getAlbumDao() {
@@ -56,6 +58,11 @@ public class DaoFacade {
         return audioDao;
     }
 
+    public AuthorDao getAuthorDao() {
+        return authorDao;
+    }
+
+    
      
     
     public void closeSqlConnection() {
