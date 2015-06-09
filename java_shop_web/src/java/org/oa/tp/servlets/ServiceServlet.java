@@ -48,12 +48,6 @@ public abstract class ServiceServlet extends HttpServlet {
     }
 
     
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        final String queryString = request.getQueryString();
-        System.out.println("query string " + queryString);
-    }
 
     @Override
     public String getServletInfo() {

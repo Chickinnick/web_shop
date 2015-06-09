@@ -20,9 +20,17 @@
         <servlet-name>AuthorsServiceServlet</servlet-name>
         <servlet-class>org.oa.tp.servlets.AuthorsServiceServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GenreServiceServlet</servlet-name>
+        <servlet-class>org.oa.tp.servlets.GenreServiceServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AlbumsServiceServlet</servlet-name>
         <url-pattern>/albums</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenreServiceServlet</servlet-name>
+        <url-pattern>/genres</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AlbumsViewServlet</servlet-name>
@@ -36,12 +44,13 @@
         <servlet-name>AuthorsServiceServlet</servlet-name>
         <url-pattern>/authors</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AudioServiceServlet</servlet-name>
+        <url-pattern>/audios</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
-       
     </session-config>
-     
-    
 </web-app>

@@ -19,7 +19,7 @@ public class DaoFacade {
     private AlbumDao albumDao;
     private AudioDao audioDao;
     private AuthorDao authorDao;
-    private GenreDao genreDao = new GenreDao();
+    private GenreDao genreDao;
     private Statement statement;
 
     public DaoFacade(ServletContext context) {
@@ -44,13 +44,14 @@ public class DaoFacade {
         albumDao = new AlbumDao(statement, connection);
         audioDao = new AudioDao(statement, connection);
         authorDao = new AuthorDao(statement, connection);
+        genreDao = new GenreDao(statement, connection);
     }
 
-    public AbstractDao<Album> getAlbumDao() {
+    public AbstractDao getAlbumDao() {
         return albumDao;
     }
 
-    public AbstractDao<Genre> getGenreDao() {
+    public AbstractDao getGenreDao() {
         return genreDao;
     }
 
@@ -62,7 +63,7 @@ public class DaoFacade {
         return authorDao;
     }
 
-    
+   
      
     
     public void closeSqlConnection() {

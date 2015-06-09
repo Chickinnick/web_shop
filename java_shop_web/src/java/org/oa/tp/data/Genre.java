@@ -10,6 +10,16 @@ public class Genre {
 	@SerializedName("name")
 	private String name;
 
+        
+        
+        
+    public Genre(String name) {
+        this.id = 0;
+        this.name = name;
+    }
+
+        
+        
 	public Genre(long id, String name) {
 		
 		this.id = id;

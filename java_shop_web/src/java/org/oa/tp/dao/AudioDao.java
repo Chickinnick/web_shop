@@ -33,7 +33,9 @@ public class AudioDao implements AbstractDao<Audio> {
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                     + COLUMN_NAME + " TEXT NOT NULL," + COLUMN_DURATION + " INT NOT NULL,"
                     + COLUMN_PRICE + " INT NOT NULL," + COLUMN_AUTHOR_ID + " INT NOT NULL,"
-                    + COLUMN_GENRE_ID + " INT NOT NULL" + ");");
+                    + COLUMN_GENRE_ID + " INT NOT NULL," + " FOREIGN KEY("+COLUMN_AUTHOR_ID +") REFERENCES author (id)"
+                    + " FOREIGN KEY("+COLUMN_GENRE_ID +") REFERENCES genre (id)"+
+                    ");");
         } catch (SQLException e) {
             e.printStackTrace();
         }

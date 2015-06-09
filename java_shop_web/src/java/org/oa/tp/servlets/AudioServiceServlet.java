@@ -27,6 +27,15 @@ public class AudioServiceServlet extends ServiceServlet {
     private static final String PARAMETER_GENRE_ID = "genre_id";
 
     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   
+        response.setContentType("application/json;charset=UTF-8");
+        DaoFacade facade = new DaoFacade(getServletContext());
+            this.create(request, response, facade);
+    }
+
+    
+    @Override
     void create(HttpServletRequest request, HttpServletResponse response, DaoFacade facade) {
     String nameString = request.getParameter(PARAMETER_NAME);
         String priceString = request.getParameter(PARAMETER_PRICE);
